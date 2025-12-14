@@ -1,0 +1,34 @@
+
+4
+
+  4.1 
+    Modify the trapezoidal rule so that it will correctly estimate the
+    integral even if comm_sz doesn't evenly divide n. 
+    (you can still assume n >= comm_sz)
+
+  4.2
+    modify the program that just prints a line of output from each process
+    (mpi_output.c) so that the output is printed in process rank order: process
+    0s output first, then process 1s, and so on.
+
+  4.3
+    Write an MPI program that computes a tree
+    structured global sum. First write your program for the 
+    special case in which comm_sz is a power of two. Then, 
+    after you’ve gotten this version working, modify your 
+    program so that it can handle any comm_sz
+
+6
+  6.1 
+    Write an MPI program that implements multiplication of a vector by a scalar 
+    and dot product. The user should enter two vectors and a scalar, all of which are 
+    read in by process 0 and distributed among the processes. The results are 
+    calculated and collected onto process 0, which prints them. You can assume that n, 
+    the order of the vectors, is evenly divisible by comm sz.
+
+  6.2
+    MPI Scatter and MPI Gather have the limitation that each process must send 
+    or receive the same number of data items. When this is not the case, we must use 
+    the MPI functions MPI Gatherv and MPI Scatterv. Look at the man pages for these 
+    functions, and modify your vector sum, dot product program so that it can 
+    correctly handle the case when n isn’t evenly divisible by comm sz.
