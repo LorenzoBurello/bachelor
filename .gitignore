@@ -1,2 +1,4 @@
 **/.vscode/
 **/bin/
+multicore/benchmark.py
+multicore/benchmark/
