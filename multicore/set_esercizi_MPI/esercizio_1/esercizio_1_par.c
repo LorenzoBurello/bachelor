@@ -20,6 +20,7 @@ int main(int argc, char const *argv[])
   int size;
   int* A;
   int* B;
+  int* Bt;
   int* C;
   int* C_final;
   int Alen;
@@ -55,17 +56,24 @@ int main(int argc, char const *argv[])
     for(int i = 0; i < m * n; i++){
       A[i] = rand() % MAX_NUM;
     }
-
+    
     for(int i = 0; i < n * p; i++){
       B[i] = rand() % MAX_NUM;
     }
-
+    
     // TODO (maybe):
     // condense broadcasts in one
     MPI_Bcast(&m, 1, MPI_INT, size-1, MPI_COMM_WORLD);
     MPI_Bcast(&n, 1, MPI_INT, size-1, MPI_COMM_WORLD);
     MPI_Bcast(&p, 1, MPI_INT, size-1, MPI_COMM_WORLD);
-
+    
+    // transpose B 
+    Bt = (int*)malloc(sizeof(int) * p * n);
+      for(int i = 0; i < n; i++){
+        for(int j = 0; j < p; j++){
+          Bt[j*n + i]  = B[i*p + j];
+        }
+      }
     // debug only
     #ifdef DEBUG
     
@@ -89,14 +97,25 @@ int main(int argc, char const *argv[])
     }
     printf("\n");
 
+    printf("Bt:\n");
+    for(int i = 0; i < n * p; i++){
+      int row = i / n;
+      int column = i % n;
+      if (column == 0 && i != 0)
+        printf("\n");
+      printf( "%d ", Bt[i]);
+    }
+    printf("\n");
+
     
    #endif
 
     // invio della matrice A
-    MPI_Bcast(A, n*m, MPI_INT, size-1, MPI_COMM_WORLD);
+    MPI_Bcast(A, m*n, MPI_INT, size-1, MPI_COMM_WORLD);
 
-    // invio della matrice B
-    MPI_Bcast(B, m*p, MPI_INT, size-1, MPI_COMM_WORLD);
+    // send B matrix
+    MPI_Bcast(Bt, n*p, MPI_INT, size-1, MPI_COMM_WORLD);
+    free(B);
   }
   else{ // processes other than p-1
 
@@ -108,28 +127,27 @@ int main(int argc, char const *argv[])
 
     cellPerProcess = (m*p + size - 1) / size;
     A = (int*) malloc(sizeof(int) * m * n);
-    B = (int*) malloc(sizeof(int) * n * p);
+    Bt = (int*) malloc(sizeof(int) * n * p);
 
     // TODO:
     // maybe condense?
     
     // ricezione della matrice A
-    MPI_Bcast(A, n*m, MPI_INT, size-1, MPI_COMM_WORLD);
+    MPI_Bcast(A, m*n, MPI_INT, size-1, MPI_COMM_WORLD);
 
     // ricezione della matrice B
-    MPI_Bcast(B, m*p, MPI_INT, size-1, MPI_COMM_WORLD);
-
+    MPI_Bcast(Bt, n*p, MPI_INT, size-1, MPI_COMM_WORLD);
   }
-
+  
   start = rank*cellPerProcess;
   end = ((rank+1)*cellPerProcess)-1;
-
-
+  
+  
   //printf("process %d cells: (%d, %d)\n", rank, start, end);
-
+  
   // allocate space to save products
   C = (int*)malloc(sizeof(int) * cellPerProcess);
-
+  
   // init CArray:
   for (int i = 0; i < cellPerProcess; i++){
     C[i] = -1;
@@ -140,10 +158,10 @@ int main(int argc, char const *argv[])
     int y = cell / p;
     int result = 0;
     for(int i = 0; i < n; i++){
-      result += A[y * n + i]*B[i * m + x];
+      result += A[y*n + i]*Bt[x*n + i];
     }
     C[cell - start] = result;
-   //printf("calculated cell %d: %d\n", cell, result);
+    //printf("calculated cell %d: %d\n", cell, result);
   }
   
   // matrix calculated, sending to process 0
@@ -162,7 +180,7 @@ int main(int argc, char const *argv[])
       }
       printf("\n");
     }
-     
+    
     #endif
     
     free(C_final);
@@ -171,7 +189,7 @@ int main(int argc, char const *argv[])
   }
 
   free(A);
-  free(B);
+  free(Bt);
   free(C);
   MPI_Barrier(MPI_COMM_WORLD);
   MPI_Finalize();

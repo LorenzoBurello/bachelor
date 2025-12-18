@@ -59,6 +59,7 @@ int main(int argc, char const *argv[])
   // allocation and calculation of C matrix (product)
   int* C = (int*)malloc(sizeof(int) * m * p);
 
+  // transposition of B matrix
   int* Bt = (int*)malloc(sizeof(int) * p * n);
   for(int i = 0; i < n; i++){
     for(int j = 0; j < p; j++){
