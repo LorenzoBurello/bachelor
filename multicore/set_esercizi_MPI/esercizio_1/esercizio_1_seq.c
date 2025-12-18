@@ -5,9 +5,6 @@
 #include <unistd.h>
 int MAX_NUM = 4;
 
-int ** allocateIntMatrix(int x, int y);
-void freeIntMatrix(int** M, int y);
-
 int main(int argc, char const *argv[])
 {
   if (argc < 4){
@@ -21,52 +18,61 @@ int main(int argc, char const *argv[])
 
   // matrices allocation and initialization
   srand(time(NULL));
-  int** A = (int**) malloc(sizeof(int*) * m);
-  int** B = (int**) malloc(sizeof(int*) * n);
+  int* A = (int*) malloc(sizeof(int) * m * n);
+  int* B = (int*) malloc(sizeof(int) * n * p);
 
   for(int i = 0; i < m; i++){
-    A[i] = (int*) malloc(sizeof(int) * n);
     for(int j = 0; j < n; j++){
-      A[i][j] = rand() % MAX_NUM;
+      A[i * n + j] = rand() % MAX_NUM;
     }
   }
 
   for(int i = 0; i < n; i++){
-    B[i] = (int*) malloc(sizeof(int) * p);
     for(int j = 0; j < p; j++){
-      B[i][j] = rand() % MAX_NUM;
+      B[i * p + j] = rand() % MAX_NUM;
     }
   }
 
   #ifdef DEBUG
     
-  printf("A:\n");
-  for(int row = 0; row < m; row++){
-    for(int column = 0; column < n; column++){
-      printf( "%d ", A[row][column]);
+    printf("A:\n");
+    for(int i = 0; i < m * n; i++){
+      int row = i / n;
+      int column = i % n;
+      if (column == 0 && i != 0)
+        printf("\n");
+      printf( "%d ", A[i]);
     }
     printf("\n");
-  }
-  
-  printf("B:\n");
-  for(int row = 0; row < n; row++){
-    for(int column = 0; column < p; column++){
-      printf( "%d ", B[row][column]);
+    
+    printf("B:\n");
+    for(int i = 0; i < n * p; i++){
+      int row = i / p;
+      int column = i % p;
+      if (column == 0 && i != 0)
+        printf("\n");
+      printf( "%d ", B[i]);
     }
-    printf("\n");
-  }
+    printf("\n"); 
   
   #endif
   // allocation and calculation of C matrix (product)
-  int** C = allocateIntMatrix(m, p);
+  int* C = (int*)malloc(sizeof(int) * n * p);
+
+  int* Bt = (int*)malloc(sizeof(int) * p * n);
+  for(int i = 0; i < n; i++){
+    for(int j = 0; j < p; j++){
+      Bt[j*n + i]  = B[i*p + j];
+    }
+  }
 
   for(int i = 0; i < m; i++){
     for(int j = 0; j < p; j++){
       int sum = 0;
       for(int k = 0; k < n; k++){
-        sum += A[i][k] * B[k][j];
+        sum += A[i*n + k] * Bt[k*n + j];
       }
-      C[i][j] = sum;
+      C[i*p + j] = sum;
     }
   }
 
@@ -74,15 +80,16 @@ int main(int argc, char const *argv[])
   printf("C:\n");
   for(int row = 0; row < m; row++){
     for(int column = 0; column < p; column++){
-      printf( "%d ", C[row][column]);
+      printf( "%d ", C_final[row*p + column]);
     }
     printf("\n");
   }
   #endif
 
-  freeIntMatrix(A, m);
-  freeIntMatrix(B, n);
-  freeIntMatrix(C, p);
+  free(A);
+  free(B);
+  free(Bt);
+  free(C);
   return 0;
 }
 
