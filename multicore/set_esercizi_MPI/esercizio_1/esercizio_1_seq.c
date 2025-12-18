@@ -57,7 +57,7 @@ int main(int argc, char const *argv[])
   
   #endif
   // allocation and calculation of C matrix (product)
-  int* C = (int*)malloc(sizeof(int) * n * p);
+  int* C = (int*)malloc(sizeof(int) * m * p);
 
   int* Bt = (int*)malloc(sizeof(int) * p * n);
   for(int i = 0; i < n; i++){
