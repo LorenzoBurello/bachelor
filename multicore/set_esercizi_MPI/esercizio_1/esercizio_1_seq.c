@@ -80,7 +80,7 @@ int main(int argc, char const *argv[])
   printf("C:\n");
   for(int row = 0; row < m; row++){
     for(int column = 0; column < p; column++){
-      printf( "%d ", C_final[row*p + column]);
+      printf( "%d ", C[row*p + column]);
     }
     printf("\n");
   }
