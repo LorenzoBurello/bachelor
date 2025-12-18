@@ -70,7 +70,7 @@ int main(int argc, char const *argv[])
     for(int j = 0; j < p; j++){
       int sum = 0;
       for(int k = 0; k < n; k++){
-        sum += A[i*n + k] * Bt[k*n + j];
+        sum += A[i*n + k] * Bt[j*n + k];
       }
       C[i*p + j] = sum;
     }
@@ -91,21 +91,4 @@ int main(int argc, char const *argv[])
   free(Bt);
   free(C);
   return 0;
-}
-
-int ** allocateIntMatrix(int rows, int columns){
-  void **M = malloc(sizeof(int*) * rows);
-  for (int i = 0; i < rows; i++){
-    M[i] = malloc(sizeof(int) * columns);
-  }
-  return (int**)M;
-}
-
-void freeIntMatrix(int** M, int y){
-
-  for (int i = 0; i < y; i++){
-    free(M[i]);
-  }
-  free(M);
-  return;
 }
