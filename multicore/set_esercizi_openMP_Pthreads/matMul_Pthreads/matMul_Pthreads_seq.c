@@ -5,11 +5,13 @@
 #include <unistd.h>
 int MAX_NUM = 4;
 
+void create_and_rand_init_array(int* A, int len);
+void print_array_matrix(int* A, int rows, int cols);
+void transpose_array_matrix(int* A, int* At, int rows, int cols);
+void calculate_array_matrix_product(int *A, int* B, int* C, int m, int n, int p);
+
 int main(int argc, char const *argv[])
 {
-  if (argc < 4){
-      printf("error: input must be 3 integers\n");
-    }
 
   // input reading (assuming correct input)
   int m = atoi(argv[1]);
@@ -17,43 +19,21 @@ int main(int argc, char const *argv[])
   int p = atoi(argv[3]);
 
   // matrices allocation and initialization
-  srand(time(NULL));
   int* A = (int*) malloc(sizeof(int) * m * n);
   int* B = (int*) malloc(sizeof(int) * n * p);
+  
+  srand(time(NULL));
+  create_and_rand_init_array(A, m*n);
+  create_and_rand_init_array(B, n*p);
 
-  for(int i = 0; i < m; i++){
-    for(int j = 0; j < n; j++){
-      A[i * n + j] = rand() % MAX_NUM;
-    }
-  }
-
-  for(int i = 0; i < n; i++){
-    for(int j = 0; j < p; j++){
-      B[i * p + j] = rand() % MAX_NUM;
-    }
-  }
 
   #ifdef DEBUG
     
     printf("A:\n");
-    for(int i = 0; i < m * n; i++){
-      int row = i / n;
-      int column = i % n;
-      if (column == 0 && i != 0)
-        printf("\n");
-      printf( "%d ", A[i]);
-    }
-    printf("\n");
-    
+    print_array_matrix(A, m, n);
+
     printf("B:\n");
-    for(int i = 0; i < n * p; i++){
-      int row = i / p;
-      int column = i % p;
-      if (column == 0 && i != 0)
-        printf("\n");
-      printf( "%d ", B[i]);
-    }
-    printf("\n"); 
+    print_array_matrix(B, n, p);
   
   #endif
   // allocation and calculation of C matrix (product)
@@ -61,30 +41,14 @@ int main(int argc, char const *argv[])
 
   // transposition of B matrix
   int* Bt = (int*)malloc(sizeof(int) * p * n);
-  for(int i = 0; i < n; i++){
-    for(int j = 0; j < p; j++){
-      Bt[j*n + i]  = B[i*p + j];
-    }
-  }
 
-  for(int i = 0; i < m; i++){
-    for(int j = 0; j < p; j++){
-      int sum = 0;
-      for(int k = 0; k < n; k++){
-        sum += A[i*n + k] * Bt[j*n + k];
-      }
-      C[i*p + j] = sum;
-    }
-  }
+  transpose_array_matrix(B, Bt, n, p);
+
+  calculate_array_matrix_product(A, B, C, m, n, p);
 
   #ifdef DEBUG
   printf("C:\n");
-  for(int row = 0; row < m; row++){
-    for(int column = 0; column < p; column++){
-      printf( "%d ", C[row*p + column]);
-    }
-    printf("\n");
-  }
+  print_array_matrix(C, m, p);
   #endif
 
   free(A);
@@ -92,4 +56,40 @@ int main(int argc, char const *argv[])
   free(Bt);
   free(C);
   return 0;
+}
+
+void create_and_rand_init_array(int* A, int len){
+  for(int i=0;i<len;i++){
+    A[i] = rand()%MAX_NUM;
+  }
+  return;
+}
+
+void print_array_matrix(int* A, int rows, int cols){
+  for(int row = 0; row < rows; row++){
+    for(int column = 0; column < cols; column++){
+      printf( "%d ", A[row*cols + column]);
+    }
+    printf("\n");
+  }
+}
+
+void transpose_array_matrix(int* A, int* At, int rows, int cols){
+  for(int row = 0; row < rows; row++){
+    for(int col = 0; col < cols; col++){
+      At[col*rows + row]  = A[row*cols + col];
+    }
+  }
+}
+
+void calculate_array_matrix_product(int *A, int* B, int* C, int m, int n, int p){
+  for(int i = 0; i < m; i++){
+    for(int j = 0; j < p; j++){
+      int sum = 0;
+      for(int k = 0; k < n; k++){
+        sum += A[i*n + k] * B[j*n + k];
+      }
+      C[i*p + j] = sum;
+    }
+  }
 }
