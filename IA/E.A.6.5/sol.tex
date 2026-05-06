@@ -1,0 +1,39 @@
+\documentclass[a4paper, 12pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{enumitem}
+\usepackage{amsmath}
+
+\title{E.A.6.5}
+\author{Lorenzo Burello}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section{Modellazione}
+\subsection{Creazione di variabili}
+Dato n numero di biglie.\newline
+Siano:
+\begin{itemize}
+    \item $U = \{1,2,3\}$
+    \item $N = \{1,2,\ldots,n\}$
+    \item $B = \{B_{k,i}| k\in N \land i \in \{1,2,3\}\}$
+    \item $B_{Schur} = \{\{k_1,k_2,k_3\}| k_1,k_2,k_3\in N, k_1 \ne k_2 \land k_1 \ne k_3 \land k_2 \ne k_3 \land k_1+k_2=k_3 \}$
+\end{itemize}
+\subsection{Definizione vincoli}
+Siano vincoli:
+\begin{itemize}[label={}]
+    \item \[\Phi_{\text{biglia\_in\_urna\_almeno}}=\bigwedge_{k\in N}^{k}B_{k,1}\lor B_{k,2} \lor B_{k,3}\]
+    \item \[\Phi_{\text{biglia\_in\_urna\_al\_piu}} = \bigwedge_{k\in N}^{k}(\lnot B_{k,1}\lor \lnot B_{k,2})\land (\lnot B_{k,1}\lor \lnot B_{k,3}) \land(\lnot B_{k,2}\lor \lnot B_{k,3})\]
+    \item \[\Phi_{\text{lemma\_di\_schur}} = \bigwedge_{k_1,k_2,k_3\in B_{Schur}}^{k_1,k_2,k_3} \bigwedge_{i\in U}^{i} \substack
+    {
+    \lnot B_{k_1,i}\lor \lnot B_{k_2,i} \\
+    \land \\
+    \lnot B_{k_1,i}\lor \lnot B_{k_3,i} \\
+    \land \\
+    \lnot B_{k_2,i}\lor \lnot B_{k_3,i}
+    }
+    \]
+\end{itemize}
+\end{document}
