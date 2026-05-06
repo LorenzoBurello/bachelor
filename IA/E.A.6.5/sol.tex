@@ -26,14 +26,11 @@ Siano vincoli:
 \begin{itemize}[label={}]
     \item \[\Phi_{\text{biglia\_in\_urna\_almeno}}=\bigwedge_{k\in N}^{k}B_{k,1}\lor B_{k,2} \lor B_{k,3}\]
     \item \[\Phi_{\text{biglia\_in\_urna\_al\_piu}} = \bigwedge_{k\in N}^{k}(\lnot B_{k,1}\lor \lnot B_{k,2})\land (\lnot B_{k,1}\lor \lnot B_{k,3}) \land(\lnot B_{k,2}\lor \lnot B_{k,3})\]
-    \item \[\Phi_{\text{lemma\_di\_schur}} = \bigwedge_{k_1,k_2,k_3\in B_{Schur}}^{k_1,k_2,k_3} \bigwedge_{i\in U}^{i} \substack
-    {
-    \lnot B_{k_1,i}\lor \lnot B_{k_2,i} \\
-    \land \\
-    \lnot B_{k_1,i}\lor \lnot B_{k_3,i} \\
-    \land \\
-    \lnot B_{k_2,i}\lor \lnot B_{k_3,i}
-    }
+    \item \[\Phi_{\text{lemma\_di\_schur}} = \bigwedge_{k_1,k_2,k_3\in B_{Schur}}^{k_1,k_2,k_3} \bigwedge_{i\in U}^{i} \lnot B_{k_1,i} \lor \lnot B_{k_2,i} \lor \lnot B_{k_3,i}
     \]
+\section{Istanziazione}
+Istanziare per $n = 5$: \newline
+s
+\section{Codifica e risoluzione}
 \end{itemize}
 \end{document}
