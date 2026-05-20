@@ -1,0 +1,93 @@
+\documentclass[a4paper, 12pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\title{E.B.1.3}
+\author{Lorenzo Burello}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section{Definizione del problema}
+\subsection{Consegna}
+Modellare, mediante una formula $\phi$ in logica del primo ordine,
+la seguente affermazione, scegliendo opportuni insiemi di simboli
+di predicato e/o funzione: \newline
+\begin{quote}
+    I cani da caccia abbaiano di notte. Chi possiede gatti non può avere topi in casa.
+    Chi ha il sonno leggero non può possedere nessun animale che abbaia di notte.
+    Aldo possiede un gatto oppure un cane da caccia.
+\end{quote}
+\subsection{Definizione dell'alfabeto}
+$\mathcal{P}$:
+\begin{itemize}[label=-]
+    \item CaneDaCaccia/1
+    \item Gatto/1
+    \item Persona/1
+    \item HaTopiInCasa/1
+    \item HaIlSonnoLeggero/1
+    \item AbbaiaDiNotte/1
+    \item Possiede/2
+\end{itemize}
+
+$\mathcal{F}$:
+\begin{itemize}[label=-]
+    \item Aldo/0
+\end{itemize}
+
+\section{Creazione di $\phi$}
+\subsection{Creazione di sotto-formule}
+\begin{quote}
+    \textbf{I cani da caccia abbaiano di notte}
+\end{quote}
+\[\phi_1 := \forall c \;\; CaneDaCaccia(c) \rightarrow AbbaiaDiNotte(c)\]
+\begin{quote}
+    \textbf{chi possiede gatti non può avere topi in casa}
+\end{quote}
+\[\phi_2 := \forall x,g\;\; (Possiede(x, g) \land Gatto(g)) \rightarrow \lnot HaTopiInCasa(x) \]
+\begin{quote}
+    \textbf{Chi ha il sonno leggero non può possedere nessun animale che abbaia di notte}
+\end{quote}
+\[ \phi_3 := \forall x \;\; (Persona(x) \land HaIlSonnoLeggero(x))\rightarrow \nexists a \;\; Animale(a) \land \]
+\[\land AbbaiaDiNotte(a) \land (Possiede(x, a))\]
+\begin{quote}
+    \textbf{Aldo possiede un gatto o un cane da caccia}
+\end{quote}
+\[ \phi_4 := \exists a\;\; Possiede(Aldo, a) \land (Gatto(a) \lor CaneDaCaccia(a))\]
+\subsection{Unione delle formule}
+\[ \phi = \phi_1 \land \phi_2 \land \phi_3 \land \phi_4 \]
+\section{Determinazione interpretazioni}
+\subsection{$ M \models \phi $}
+
+Sia $D = \{\alpha, \beta \}$ il dominio di $M$:
+\begin{itemize}[label=-]
+    \item $ M(CaneDaCaccia) = \{ \beta \} $
+    \item $ M(Gatto) = \{ \} $
+    \item $ M(Persona) = \{ \alpha \} $
+    \item $ M(HaTopiInCasa) = \{\} $
+    \item $ M(HaIlSonnoLeggero) = \{\} $
+    \item $ M(AbbaiaDiNotte) = \{ \beta \} $
+    \item $ M(Possiede) = \{(\alpha, \beta)\} $
+    \item $ Aldo \rightarrow \alpha $
+\end{itemize}
+\subsection{$ I \models \phi $}
+
+Sia $D = \{\alpha, \beta, \gamma, \delta \}$ il dominio di $I$:
+\begin{itemize}[label=-]
+    \item $ I(CaneDaCaccia) = \{ \beta \} $
+    \item $ I(Gatto) = \{ \delta \} $
+    \item $ I(Persona) = \{ \alpha, \gamma \} $
+    \item $ I(HaTopiInCasa) = \{ \gamma \} $
+    \item $ I(HaIlSonnoLeggero) = \{ \gamma \} $
+    \item $ I(AbbaiaDiNotte) = \{ \delta \} $
+    \item $ I(Possiede) = \{(\alpha, \beta), (\gamma, \delta)\} $
+    \item $ Aldo \rightarrow \alpha $
+\end{itemize}
+$I$ non può essere modello di $\phi$, poiché $\gamma$ possiede $\delta$, un gatto
+che abbaia, pur avendo il sonno leggero e i topi in casa
+
+\end{document}
