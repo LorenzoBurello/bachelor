@@ -1,0 +1,35 @@
+(define (problem four_hanoi) (:domain Hanoi_towers)
+(:objects 
+    d1 d2 d3 d4 - disk
+)
+
+(:init
+    (less d1 d2)
+    (less d1 d3)
+    (less d1 d4)
+    (less d2 d3)
+    (less d2 d4)
+    (less d3 d4)
+    (less d1 table)
+    (less d2 table)
+    (less d3 table)
+    (less d4 table)
+    (Top a1 d1)
+    (Top a2 table)
+    (Top a3 table)
+    (On a1 d1 d2)
+    (On a1 d2 d3)
+    (On a1 d3 d4)
+    (On a1 d4 table)
+)
+
+(:goal (and
+    (Top a1 table)
+    (Top a2 table)
+    (Top a3 d1)
+    (On a3 d1 d2)
+    (On a3 d2 d3)
+    (On a3 d3 d4)
+    (On a3 d4 table)
+))
+)
