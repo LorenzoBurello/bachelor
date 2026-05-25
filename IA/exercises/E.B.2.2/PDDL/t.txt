@@ -1,0 +1,42 @@
+Charlie è una simpatica e tenace scimmietta che si trova in un ambiente
+bidimensionale (coordinate: position e height) del tipo di quello disegnato
+in fig:scimmia(a), in cui il pavimento è composto di scatole di dimensione
+1 × 1. Charlie può spostarsi a destra o a sinistra di una posizione alla
+volta camminando sulle scatole. Di norma, Charlie può spostarsi purché, nel
+passaggio, la differenza in altezza sia al più 1. Ad esempio, nella posizione
+in fig:scimmia(a) Charlie può spostarsi a destra o a sinistra di una posizione
+(aumentando di 1 la sua altezza), mentre nella situazione di fig:scimmia(b)
+non può muoversi né a destra né a sinistra, essendo il dislivello troppo alto.
+L’ambiente è completato da una banana che pende dal soffitto in una
+certa posizione (ed altezza) ed una scala (in una certa posizione, poggiante
+su una scatola), che Charlie può utilizzare.
+L’obiettivo di Charlie è di configurare il pavimento spingendo e distrug-
+gendo scatole e muovendosi per arrivare proprio sotto la banana (esattamen-
+te una cella sotto, come in fig:scimmia(g)) da dove può finalmente prendere
+e gustare l’agognato premio.
+Le azioni che Charlie può compiere sono:
+• Prendere la scala (hold ladder, si veda la fig:scimmia(c)). Per farlo,
+Charlie deve essere nella stessa posizione della scala.
+• Lasciare la scala (drop ladder, si veda la fig:scimmia(c)) nella posizione
+corrente.
+• Spostarsi (move) a destra o a sinistra. Per spostarsi, di norma la
+differenza in altezza delle posizioni di partenza ed arrivo deve essere al
+più 1 (si vedano le Figure 1.1(a) e (b)). Con l’aiuto della scala però,
+la differenza in altezza può essere 2 (si veda la fig:scimmia(d)).
+• Spingere (push left o right) una scatola che si trova alla posizione
+adiacente. La fig:scimmia(e) raffigura Charlie che spinge a sinistra la
+scatola alla sua immediata sinistra: sia Charlie che la scatola si spo-
+stano di una posizione; inoltre, essendo le scatole soggette alla forza
+di gravità, possono cadere verso il basso. Si noti che la spinta di una
+scatola ha successo solo se la scatola non è adiacente ad altre scato-
+le (in altri termini, Charlie non è sufficientemente forte per spingere
+due scatole adiacenti). La fig:scimmia(e) mostra spinte in orizzontale,
+mentre la fig:scimmia(f) mostra come, con l’aiuto della scala, Charlie
+riesca ad impilare una scatola sull’altra (si noti che, con l’aiuto della
+scala, la scatola spinta si sposta di due posizioni e sale di un livello).
+In quest’ultimo caso, si può immaginare che se Charlie è nella stessa
+posizione della scala, può sia muoversi sopra che spingere una scatola
+adiacente posta al livello immediatamente più in alto, come mostrato
+nella fig:scimmia(f)).
+• Scavare (dig) nella posizione corrente, distruggendo la scatola su cui è
+posizionato e scendendo di un livello (fig:scimmia(f)).
