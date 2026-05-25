@@ -2,3 +2,4 @@ SATsolvers/docker-ai-tools
 SATlib/
 PDDLsolvers/
 log
+fastDownwardRunner.py
