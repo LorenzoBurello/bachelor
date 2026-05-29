@@ -1,0 +1,57 @@
+(define (problem test_1) (:domain domino_costs)
+(:objects 
+    D1 D2 D3 D4 D5 D6 - domino
+    v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 - cost
+)
+
+(:init
+
+    (Clear)
+    (TotCost v0)
+    (DominoRight D2 n1)
+    (DominoLeft D2 n5)
+    (DominoRight D5 n2)
+    (DominoLeft D5 n1)
+    (DominoRight D3 n3)
+    (DominoLeft D3 n2)
+    (DominoRight D4 n4)
+    (DominoLeft D4 n3)
+    (DominoRight D1 n4)
+    (DominoLeft D1 n5)
+    (DominoRight D6 n5)
+    (DominoLeft D6 n4)
+    (ActionCost1 v0 v1)
+    (ActionCost1 v1 v2)
+    (ActionCost1 v2 v3)
+    (ActionCost1 v3 v4)
+    (ActionCost1 v4 v5)
+    (ActionCost1 v5 v6)
+    (ActionCost1 v6 v7)
+    (ActionCost1 v7 v8)
+    (ActionCost1 v8 v9)
+    (ActionCost1 v9 v10)
+    (ActionCost2 v0 v2)
+    (ActionCost2 v1 v3)
+    (ActionCost2 v2 v4)
+    (ActionCost2 v3 v5)
+    (ActionCost2 v4 v6)
+    (ActionCost2 v5 v7)
+    (ActionCost2 v6 v8)
+    (ActionCost2 v7 v9)
+    (ActionCost2 v8 v10)
+)
+
+(:goal (and
+            (Inserted D1)
+            (Inserted D2)
+            (Inserted D3)
+            (Inserted D4)
+            (Inserted D5)
+            (Inserted D6)
+            (TotCost v10)
+        )
+)
+
+;un-comment the following line if metric is needed
+;(:metric minimize (???))
+)
