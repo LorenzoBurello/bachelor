@@ -1,0 +1,14 @@
+#pragma once
+#include "basic.hpp"
+
+class Params
+{
+
+public:
+    Params();
+
+    std::default_random_engine r;
+    double T = 0, H = 0, L = 0, V = 0, a = 0, b = 0;
+    int N = 0, M = 0;
+
+};
