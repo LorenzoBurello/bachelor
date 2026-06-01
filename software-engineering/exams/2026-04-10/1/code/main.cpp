@@ -6,10 +6,9 @@ int main(){
 
     Params p;
     InputReader inp_read(&p, "parameters.txt");
-    Simulator sim(&p);
+    Montecarlo m(&p);
 
     inp_read.obtainParams();
-    sim.init();
 
 
 
@@ -22,6 +21,9 @@ int main(){
     std::cout << "a: " << p.a << std::endl;
     std::cout << "b: " << p.b << std::endl;
 
+
+    double avg = m.simulate();
+    std::cout << "collision rate: " << avg/p.H << " col/s" << std::endl;
 
     return EXIT_SUCCESS;
 }
