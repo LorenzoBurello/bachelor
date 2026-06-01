@@ -10,22 +10,22 @@ MDP::MDP(Params* p_init)
     p = p_init;
     // initialization position
     std::uniform_real_distribution<> dist_init_pos(- (p->L), p->L);
-    x = dist_init_pos(p->r);
-    y = dist_init_pos(p->r);
-    z = dist_init_pos(p->r);
+    x = dist_init_pos(p->eng);
+    y = dist_init_pos(p->eng);
+    z = dist_init_pos(p->eng);
 
     // initialization theta, phi
     std::uniform_real_distribution<> dist_init_theta(0, M_PI);
     std::uniform_real_distribution<> dist_init_phi(0, 2*M_PI);
-    theta = dist_init_theta(p->r);
-    phi = dist_init_phi(p->r);
+    theta = dist_init_theta(p->eng);
+    phi = dist_init_phi(p->eng);
 }
 
 void MDP::update_angular_coefficients(){
 
     // update theta and phi
-    theta = theta + p->T * p->a * dist_uw(p->r);
-    phi = phi + p->T * p->b * dist_uw(p->r);
+    theta = theta + p->T * p->a * dist_uw(p->eng);
+    phi = phi + p->T * p->b * dist_uw(p->eng);
 
 }
 
