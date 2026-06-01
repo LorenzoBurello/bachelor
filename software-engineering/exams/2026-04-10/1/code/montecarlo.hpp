@@ -7,8 +7,8 @@ class Montecarlo{
 public:
 
     Montecarlo(Params* p_init);
-    double simulate();
-
+    void simulate();
+    double getCollisionRate();
 
     Params* p;
     double avg = 0;

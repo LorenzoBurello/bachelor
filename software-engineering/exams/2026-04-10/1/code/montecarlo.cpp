@@ -6,12 +6,15 @@ Montecarlo::Montecarlo(Params* p_init){
     
 }
 
-double Montecarlo::simulate(){
+void Montecarlo::simulate(){
     for(size_t _ = 0; _<p->M; _++){
         Simulator sim(p);
         sim.init();
         sim.start();
         avg += (sim.collisions - avg)/p->M;
     }
-    return avg;
+}
+
+double Montecarlo::getCollisionRate(){
+    return avg/p->H;
 }

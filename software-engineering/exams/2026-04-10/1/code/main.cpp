@@ -7,6 +7,7 @@ int main(){
     Params p;
     InputReader inp_read(&p, "parameters.txt");
     Montecarlo m(&p);
+    OutputWriter ow("results.txt");
 
     inp_read.obtainParams();
 
@@ -22,8 +23,9 @@ int main(){
     std::cout << "b: " << p.b << std::endl;
 
 
-    double avg = m.simulate();
-    std::cout << "collision rate: " << avg/p.H << " col/s" << std::endl;
+    m.simulate();
+    ow.writeOutput(m.getCollisionRate());
+
 
     return EXIT_SUCCESS;
 }

@@ -4,3 +4,4 @@
 #include "params.hpp"
 #include "simulator.hpp"
 #include "montecarlo.hpp"
+#include "outputWriter.hpp"
